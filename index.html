@@ -1,0 +1,1776 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <meta name="description" content="CineMax MX — Mira las mejores películas y series en línea gratis. Catálogo actualizado con todos los géneros." />
+  <meta name="theme-color" content="#141414" />
+  <title>CineMax MX — Películas y Series Online</title>
+
+  <!-- Google Analytics — reemplaza G-XXXXXXXXXX con tu ID real -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+
+  <!-- Preconnect para velocidad -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://www.youtube.com" />
+  <link rel="preconnect" href="https://i.ytimg.com" />
+
+  <!-- Font: Inter (moderna como Netflix 2026) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:        #0a0a0f;
+      --bg2:       #141418;
+      --bg3:       #1c1c24;
+      --bg4:       #25252f;
+      --surface:   #1a1a22;
+      --border:    rgba(255,255,255,.08);
+      --red:       #e50914;
+      --red2:      #f40612;
+      --gold:      #f5c518;
+      --text:      #e8e8f0;
+      --text2:     #a0a0b8;
+      --text3:     #606078;
+      --white:     #ffffff;
+      --radius:    10px;
+      --radius-lg: 16px;
+      --nav-h:     64px;
+      --shadow:    0 8px 32px rgba(0,0,0,.6);
+      --glow-red:  0 0 20px rgba(229,9,20,.4);
+      --transition: .22s cubic-bezier(.4,0,.2,1);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; font-family: inherit; border: none; outline: none; }
+    ul { list-style: none; }
+
+    /* ============================================================
+       SCROLLBAR
+    ============================================================ */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg2); }
+    ::-webkit-scrollbar-thumb { background: var(--bg4); border-radius: 99px; }
+
+    /* ============================================================
+       ADSTERRA SMARTLINK BANNER — TOP (antes del nav)
+    ============================================================ */
+    #adsterra-top {
+      width: 100%;
+      background: linear-gradient(90deg, #1a0a0a, #0f0f1a, #1a0a0a);
+      text-align: center;
+      padding: 6px 12px;
+      font-size: 12px;
+      color: var(--text2);
+      letter-spacing: .5px;
+    }
+    #adsterra-top a {
+      color: var(--gold);
+      font-weight: 600;
+    }
+    /* ZONA REAL ADSTERRA — reemplaza el contenido del div con tu script de Adsterra */
+    /* Ejemplo: <script async="async" data-cfasync="false" src="//pl000000.profitablegatecpm.com/XXXXXXX/invoke.js"></script> */
+
+    /* ============================================================
+       NAVBAR
+    ============================================================ */
+    #navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      padding: 0 4vw;
+      gap: 20px;
+      background: linear-gradient(180deg, rgba(10,10,15,.98) 0%, rgba(10,10,15,.85) 100%);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: background var(--transition);
+    }
+    .nav-logo {
+      font-size: clamp(20px, 4vw, 28px);
+      font-weight: 900;
+      letter-spacing: -1px;
+      color: var(--red);
+      text-transform: uppercase;
+      flex-shrink: 0;
+      text-shadow: var(--glow-red);
+    }
+    .nav-logo span { color: var(--white); }
+    .nav-links {
+      display: flex;
+      gap: 4px;
+      flex: 1;
+    }
+    .nav-links a {
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text2);
+      transition: color var(--transition), background var(--transition);
+      white-space: nowrap;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--white);
+      background: rgba(255,255,255,.07);
+    }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    /* Search bar */
+    .search-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    #search-toggle {
+      background: transparent;
+      padding: 7px;
+      border-radius: 8px;
+      color: var(--text2);
+      font-size: 18px;
+      transition: color var(--transition), background var(--transition);
+    }
+    #search-toggle:hover { color: var(--white); background: rgba(255,255,255,.08); }
+    #search-box {
+      position: absolute;
+      right: 36px;
+      width: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: width .3s ease, opacity .3s ease;
+    }
+    #search-box.open { width: min(240px, 55vw); opacity: 1; }
+    #search-input {
+      width: 100%;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-size: 14px;
+      color: var(--text);
+      outline: none;
+      transition: border-color var(--transition);
+    }
+    #search-input::placeholder { color: var(--text3); }
+    #search-input:focus { border-color: var(--red); }
+    /* Hamburger */
+    #hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: transparent;
+      padding: 6px;
+      border-radius: 6px;
+    }
+    #hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text2);
+      border-radius: 2px;
+      transition: var(--transition);
+    }
+    #hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    #hamburger.open span:nth-child(2) { opacity: 0; }
+    #hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile menu */
+    #mobile-menu {
+      display: none;
+      position: fixed;
+      top: var(--nav-h);
+      left: 0; right: 0;
+      background: rgba(10,10,15,.97);
+      backdrop-filter: blur(24px);
+      padding: 20px 4vw 28px;
+      z-index: 999;
+      flex-direction: column;
+      gap: 4px;
+      border-bottom: 1px solid var(--border);
+    }
+    #mobile-menu.open { display: flex; }
+    #mobile-menu a {
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text2);
+      transition: var(--transition);
+    }
+    #mobile-menu a:hover { color: var(--white); background: rgba(255,255,255,.07); }
+    #mobile-search-wrap { margin-top: 12px; }
+    #mobile-search {
+      width: 100%;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 11px 16px;
+      font-size: 15px;
+      color: var(--text);
+      outline: none;
+    }
+    #mobile-search:focus { border-color: var(--red); }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    #hero {
+      position: relative;
+      height: clamp(480px, 70vw, 720px);
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+    }
+    #hero-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg,
+        #0d0d1a 0%,
+        #1a0a1a 30%,
+        #0d1a0d 60%,
+        #1a1a0d 100%);
+    }
+    .hero-poster {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 70% 40%, rgba(229,9,20,.12) 0%, transparent 60%),
+        radial-gradient(ellipse at 20% 80%, rgba(100,20,200,.08) 0%, transparent 50%);
+    }
+    /* Animated gradient overlay for cinematic feel */
+    .hero-poster::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        transparent 0%,
+        transparent 30%,
+        rgba(10,10,15,.6) 60%,
+        rgba(10,10,15,.95) 85%,
+        var(--bg) 100%
+      );
+    }
+    /* Hero film strip decoration */
+    .hero-deco {
+      position: absolute;
+      top: 0; right: 0;
+      width: 55%;
+      height: 100%;
+      overflow: hidden;
+      opacity: .3;
+    }
+    .hero-deco-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(229,9,20,.15) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(229,9,20,.15) 1px, transparent 1px);
+      background-size: 60px 60px;
+      animation: gridMove 12s linear infinite;
+    }
+    @keyframes gridMove {
+      from { background-position: 0 0; }
+      to   { background-position: 60px 60px; }
+    }
+    #hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 5vw 48px;
+      max-width: 680px;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--red);
+      color: #fff;
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    #hero-title {
+      font-size: clamp(28px, 6vw, 64px);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -1.5px;
+      color: var(--white);
+      margin-bottom: 14px;
+      text-shadow: 0 2px 20px rgba(0,0,0,.8);
+    }
+    #hero-desc {
+      font-size: clamp(14px, 2vw, 17px);
+      color: var(--text2);
+      line-height: 1.65;
+      margin-bottom: 28px;
+      max-width: 520px;
+    }
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+    .hero-meta-item {
+      font-size: 13px;
+      color: var(--text2);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .hero-meta-item .dot {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--text3);
+    }
+    .rating-badge {
+      background: var(--gold);
+      color: #000;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+    .hero-btns {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .btn-play {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--red);
+      color: #fff;
+      padding: 13px 28px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: .3px;
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+      box-shadow: var(--glow-red);
+    }
+    .btn-play:hover {
+      background: var(--red2);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(229,9,20,.5);
+    }
+    .btn-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,.12);
+      color: #fff;
+      padding: 13px 24px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      border: 1px solid rgba(255,255,255,.18);
+      transition: background var(--transition), transform var(--transition);
+      backdrop-filter: blur(8px);
+    }
+    .btn-info:hover {
+      background: rgba(255,255,255,.2);
+      transform: translateY(-2px);
+    }
+
+    /* ============================================================
+       MAIN LAYOUT
+    ============================================================ */
+    #main { padding: 0 4vw 60px; }
+
+    /* ============================================================
+       GENRE FILTER BAR
+    ============================================================ */
+    .filter-section {
+      margin: 32px 0 24px;
+      overflow-x: auto;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .filter-section::-webkit-scrollbar { display: none; }
+    .filter-tabs {
+      display: flex;
+      gap: 8px;
+      min-width: max-content;
+      padding-bottom: 4px;
+    }
+    .filter-tab {
+      padding: 8px 18px;
+      border-radius: 99px;
+      font-size: 13px;
+      font-weight: 600;
+      background: var(--bg3);
+      color: var(--text2);
+      border: 1px solid var(--border);
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+    .filter-tab:hover { color: var(--white); border-color: rgba(255,255,255,.2); }
+    .filter-tab.active {
+      background: var(--red);
+      color: #fff;
+      border-color: var(--red);
+      box-shadow: var(--glow-red);
+    }
+
+    /* ============================================================
+       SECTION HEADER
+    ============================================================ */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-size: clamp(17px, 3vw, 22px);
+      font-weight: 800;
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-title .icon {
+      font-size: 18px;
+    }
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--red) 0%, transparent 100%);
+      margin-left: 14px;
+      opacity: .3;
+    }
+    .view-all {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--red);
+      padding: 6px 14px;
+      border-radius: 6px;
+      border: 1px solid rgba(229,9,20,.35);
+      transition: var(--transition);
+      flex-shrink: 0;
+    }
+    .view-all:hover { background: rgba(229,9,20,.12); }
+
+    /* ============================================================
+       MOVIE GRID / ROW
+    ============================================================ */
+    .movies-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 14px;
+    }
+    .movies-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 14px;
+    }
+    /* Card */
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform var(--transition), box-shadow var(--transition);
+      position: relative;
+      border: 1px solid var(--border);
+    }
+    .card:hover {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 20px 48px rgba(0,0,0,.7);
+      z-index: 2;
+    }
+    .card-thumb {
+      position: relative;
+      aspect-ratio: 2/3;
+      overflow: hidden;
+      background: var(--bg3);
+    }
+    .card-thumb-bg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .4s ease;
+    }
+    .card:hover .card-thumb-bg { transform: scale(1.06); }
+    /* SVG thumbnail fallback */
+    .card-thumb-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+    }
+    /* Card overlay on hover */
+    .card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,.9) 100%);
+      opacity: 0;
+      transition: opacity var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card:hover .card-overlay { opacity: 1; }
+    .card-play-btn {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: rgba(229,9,20,.9);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      box-shadow: 0 4px 16px rgba(229,9,20,.5);
+      transform: scale(.8);
+      transition: transform var(--transition);
+    }
+    .card:hover .card-play-btn { transform: scale(1); }
+    .card-badge {
+      position: absolute;
+      top: 8px; left: 8px;
+      background: var(--red);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 7px;
+      border-radius: 4px;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+    }
+    .card-rating {
+      position: absolute;
+      top: 8px; right: 8px;
+      background: rgba(0,0,0,.75);
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 7px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      backdrop-filter: blur(4px);
+    }
+    .card-info {
+      padding: 12px 12px 14px;
+    }
+    .card-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.3;
+      margin-bottom: 5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .card-meta {
+      font-size: 11px;
+      color: var(--text3);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .card-genre-pill {
+      background: var(--bg4);
+      padding: 2px 8px;
+      border-radius: 99px;
+      font-size: 10px;
+      color: var(--text2);
+    }
+
+    /* ============================================================
+       FEATURED ROW (landscape cards)
+    ============================================================ */
+    .featured-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .feat-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      transition: transform var(--transition), box-shadow var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+    .feat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,.6);
+    }
+    .feat-thumb {
+      aspect-ratio: 16/9;
+      background: var(--bg3);
+      position: relative;
+      overflow: hidden;
+    }
+    .feat-thumb-gradient {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #1a0a1a, #0d1a1a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 64px;
+    }
+    .feat-play {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,.35);
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+    .feat-card:hover .feat-play { opacity: 1; }
+    .feat-play-btn {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: var(--red);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      box-shadow: var(--glow-red);
+    }
+    .feat-info { padding: 14px 16px 16px; flex: 1; }
+    .feat-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+    .feat-desc {
+      font-size: 12px;
+      color: var(--text2);
+      line-height: 1.6;
+      margin-bottom: 10px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .feat-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .feat-tags {
+      display: flex; gap: 6px; flex-wrap: wrap;
+    }
+    .feat-tag {
+      background: var(--bg4);
+      color: var(--text2);
+      font-size: 10px;
+      padding: 3px 9px;
+      border-radius: 99px;
+    }
+    .feat-rating {
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 700;
+      display: flex; align-items: center; gap: 3px;
+    }
+
+    /* ============================================================
+       AFFILIATE SECTION
+    ============================================================ */
+    #affiliate-section {
+      margin: 48px 0;
+      padding: 28px 32px;
+      background: linear-gradient(135deg, var(--bg3) 0%, var(--bg2) 100%);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    #affiliate-section::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(229,9,20,.12), transparent);
+      pointer-events: none;
+    }
+    .affiliate-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text3);
+      margin-bottom: 10px;
+    }
+    .affiliate-title {
+      font-size: clamp(16px, 3vw, 22px);
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .affiliate-desc {
+      font-size: 14px;
+      color: var(--text2);
+      margin-bottom: 20px;
+      max-width: 500px;
+      line-height: 1.6;
+    }
+    .affiliate-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .aff-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      transition: var(--transition);
+    }
+    .aff-btn-1 {
+      background: linear-gradient(135deg, #ff6b35, #f7c59f);
+      color: #000;
+    }
+    .aff-btn-1:hover { opacity: .88; transform: translateY(-1px); }
+    .aff-btn-2 {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: #fff;
+    }
+    .aff-btn-2:hover { opacity: .88; transform: translateY(-1px); }
+    .aff-btn-3 {
+      background: var(--bg4);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .aff-btn-3:hover { border-color: rgba(255,255,255,.2); color: var(--white); }
+    /* NOTA: Reemplaza href="#" con tus links de afiliado reales */
+
+    /* ============================================================
+       ADSTERRA SMARTLINK — MIDDLE
+    ============================================================ */
+    .adsterra-mid {
+      margin: 36px 0;
+      min-height: 80px;
+      background: var(--bg2);
+      border-radius: var(--radius);
+      border: 1px dashed var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: var(--text3);
+      /* Reemplaza el contenido de este div con tu script Adsterra Smartlink */
+      /* <script async="async" data-cfasync="false" src="//pl000000.profitablegatecpm.com/XXXX/invoke.js"></script> */
+    }
+    .adsterra-mid-label {
+      text-align: center;
+    }
+    .adsterra-mid-label strong { color: var(--text2); display: block; font-size: 13px; margin-bottom: 4px; }
+
+    /* ============================================================
+       ADSTERRA SMARTLINK — BOTTOM
+    ============================================================ */
+    .adsterra-bottom {
+      margin: 24px 0;
+      min-height: 90px;
+      background: var(--bg2);
+      border-radius: var(--radius);
+      border: 1px dashed var(--border);
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* ============================================================
+       PLAYER MODAL
+    ============================================================ */
+    #player-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: rgba(0,0,0,.92);
+      backdrop-filter: blur(12px);
+      overflow-y: auto;
+    }
+    #player-modal.open { display: block; }
+    #player-modal-inner {
+      position: relative;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 20px 4vw 60px;
+    }
+    #player-close {
+      position: sticky;
+      top: 16px;
+      float: right;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.12);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      color: var(--white);
+      z-index: 10;
+      transition: background var(--transition);
+      margin-bottom: 12px;
+      border: 1px solid rgba(255,255,255,.15);
+    }
+    #player-close:hover { background: rgba(229,9,20,.6); }
+    .player-title-area { margin-bottom: 20px; clear: both; }
+    .player-badge {
+      display: inline-block;
+      background: var(--red);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 4px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    #player-movie-title {
+      font-size: clamp(20px, 5vw, 36px);
+      font-weight: 900;
+      color: var(--white);
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+    .player-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .player-meta-tag {
+      background: var(--bg4);
+      padding: 4px 12px;
+      border-radius: 99px;
+      font-size: 12px;
+      color: var(--text2);
+    }
+    .player-rating {
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 14px;
+    }
+    /* Video embed */
+    .video-container {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      background: #000;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0,0,0,.8);
+    }
+    .video-container iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    /* Episode list */
+    #episode-section { margin-top: 32px; }
+    .episode-section-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .episodes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(68px, 1fr));
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+    .ep-btn {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 6px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text2);
+      text-align: center;
+      transition: var(--transition);
+    }
+    .ep-btn:hover, .ep-btn.active {
+      background: var(--red);
+      color: #fff;
+      border-color: var(--red);
+      box-shadow: var(--glow-red);
+    }
+    /* Movie description */
+    #player-desc {
+      font-size: 14px;
+      color: var(--text2);
+      line-height: 1.75;
+      margin-top: 20px;
+      padding: 20px;
+      background: var(--bg2);
+      border-radius: var(--radius);
+      border-left: 3px solid var(--red);
+    }
+    /* Recommended in modal */
+    .modal-rec-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--white);
+      margin: 28px 0 14px;
+    }
+
+    /* ============================================================
+       NO RESULTS
+    ============================================================ */
+    #no-results {
+      display: none;
+      text-align: center;
+      padding: 64px 20px;
+      color: var(--text3);
+    }
+    #no-results .icon { font-size: 56px; margin-bottom: 16px; }
+    #no-results h3 { font-size: 18px; color: var(--text2); margin-bottom: 8px; }
+    #no-results p { font-size: 14px; }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      padding: 40px 5vw 30px;
+      margin-top: 48px;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 32px;
+      margin-bottom: 40px;
+    }
+    .footer-brand .logo {
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--red);
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+      text-shadow: var(--glow-red);
+    }
+    .footer-brand .logo span { color: var(--white); }
+    .footer-brand p {
+      font-size: 13px;
+      color: var(--text2);
+      line-height: 1.7;
+      max-width: 260px;
+    }
+    .footer-col h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: .5px;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+    }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul li a {
+      font-size: 13px;
+      color: var(--text2);
+      transition: color var(--transition);
+    }
+    .footer-col ul li a:hover { color: var(--red); }
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-bottom p { font-size: 12px; color: var(--text3); }
+    .footer-langs { display: flex; gap: 8px; }
+    .footer-langs button {
+      background: var(--bg4);
+      color: var(--text2);
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      transition: var(--transition);
+    }
+    .footer-langs button:hover { color: var(--white); border-color: rgba(255,255,255,.2); }
+
+    /* ============================================================
+       BACK TO TOP
+    ============================================================ */
+    #back-top {
+      position: fixed;
+      bottom: 24px; right: 20px;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: var(--red);
+      color: #fff;
+      font-size: 18px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--glow-red);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition), transform var(--transition);
+      z-index: 500;
+    }
+    #back-top.show { opacity: 1; pointer-events: auto; }
+    #back-top:hover { transform: translateY(-3px); }
+
+    /* ============================================================
+       LOADING SKELETON
+    ============================================================ */
+    .skeleton {
+      background: linear-gradient(90deg, var(--bg3) 25%, var(--bg4) 50%, var(--bg3) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.6s infinite;
+      border-radius: var(--radius);
+    }
+    @keyframes shimmer {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* ============================================================
+       TOAST NOTIFICATION
+    ============================================================ */
+    #toast {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--bg3);
+      color: var(--white);
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      opacity: 0;
+      transition: opacity .3s, transform .3s;
+      z-index: 3000;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    #toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 900px) {
+      .footer-top { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      #hamburger { display: flex; }
+      #search-box.open { width: min(200px, 50vw); }
+      .movies-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
+      .movies-row  { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+      .featured-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .footer-top { grid-template-columns: 1fr; }
+      #hero { height: clamp(380px, 90vw, 500px); }
+      .hero-btns .btn-play,
+      .hero-btns .btn-info { padding: 11px 18px; font-size: 14px; }
+      .movies-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; }
+      #affiliate-section { padding: 20px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ============================================================
+     ADSTERRA SMARTLINK — TOP BANNER
+     ↓↓ REEMPLAZA ESTE DIV CON TU SCRIPT DE ADSTERRA ↓↓
+============================================================ -->
+<div id="adsterra-top">
+  🎬 <strong>CineMax MX</strong> &nbsp;|&nbsp; Películas y series gratis &nbsp;|&nbsp;
+  <a href="#" onclick="showToast('¡Smartlink activo!'); return false;">Ver oferta exclusiva →</a>
+  <!-- ZONA ADSTERRA SMARTLINK TOP: pega aquí tu script de Adsterra -->
+</div>
+
+<!-- ============================================================
+     NAVBAR
+============================================================ -->
+<nav id="navbar">
+  <div class="nav-logo">CINE<span>MAX</span></div>
+
+  <div class="nav-links">
+    <a href="#" class="active">Inicio</a>
+    <a href="#" onclick="filterByGenre('Acción'); return false;">Acción</a>
+    <a href="#" onclick="filterByGenre('Comedia'); return false;">Comedia</a>
+    <a href="#" onclick="filterByGenre('Drama'); return false;">Drama</a>
+    <a href="#" onclick="filterByGenre('Terror'); return false;">Terror</a>
+    <a href="#" onclick="filterByGenre('Animación'); return false;">Animación</a>
+    <a href="#" onclick="filterByGenre('Series'); return false;">Series</a>
+  </div>
+
+  <div class="nav-right">
+    <div class="search-wrap">
+      <div id="search-box">
+        <input type="search" id="search-input" placeholder="Buscar película..." autocomplete="off" />
+      </div>
+      <button id="search-toggle" onclick="toggleSearch()" aria-label="Buscar">🔍</button>
+    </div>
+    <button id="hamburger" onclick="toggleMenu()" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile menu -->
+<div id="mobile-menu">
+  <a href="#" onclick="closeMobileMenu()">🏠 Inicio</a>
+  <a href="#" onclick="filterByGenre('Acción'); closeMobileMenu();">💥 Acción</a>
+  <a href="#" onclick="filterByGenre('Comedia'); closeMobileMenu();">😂 Comedia</a>
+  <a href="#" onclick="filterByGenre('Drama'); closeMobileMenu();">🎭 Drama</a>
+  <a href="#" onclick="filterByGenre('Terror'); closeMobileMenu();">👻 Terror</a>
+  <a href="#" onclick="filterByGenre('Animación'); closeMobileMenu();">🎨 Animación</a>
+  <a href="#" onclick="filterByGenre('Ciencia Ficción'); closeMobileMenu();">🚀 Ciencia Ficción</a>
+  <a href="#" onclick="filterByGenre('Romance'); closeMobileMenu();">💖 Romance</a>
+  <a href="#" onclick="filterByGenre('Series'); closeMobileMenu();">📺 Series</a>
+  <div id="mobile-search-wrap">
+    <input type="search" id="mobile-search" placeholder="🔍  Buscar película o serie..." oninput="handleSearch(this.value)" autocomplete="off" />
+  </div>
+</div>
+
+<!-- ============================================================
+     HERO SECTION
+============================================================ -->
+<section id="hero">
+  <div id="hero-bg"></div>
+  <div class="hero-poster">
+    <div class="hero-deco">
+      <div class="hero-deco-grid"></div>
+    </div>
+  </div>
+  <div id="hero-content">
+    <div class="hero-badge">🔥 Tendencia #1 en México</div>
+    <h1 id="hero-title">El Último Imperio</h1>
+    <p id="hero-desc">
+      En un México del futuro cercano, un joven hacker descubre que los cimientos del poder ocultan un secreto que podría cambiarlo todo. Una historia de traición, redención y revolución.
+    </p>
+    <div class="hero-meta">
+      <span class="hero-meta-item">
+        <span class="rating-badge">⭐ 8.7</span>
+      </span>
+      <span class="hero-meta-item"><span class="dot"></span> 2026</span>
+      <span class="hero-meta-item"><span class="dot"></span> 2h 18min</span>
+      <span class="hero-meta-item"><span class="dot"></span> Acción • Ciencia Ficción</span>
+    </div>
+    <div class="hero-btns">
+      <button class="btn-play" onclick="openPlayer(0)">
+        ▶ Ver Ahora
+      </button>
+      <button class="btn-info" onclick="openPlayer(0)">
+        ℹ Más info
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MAIN CONTENT
+============================================================ -->
+<main id="main">
+
+  <!-- GENRE FILTER TABS -->
+  <div class="filter-section">
+    <div class="filter-tabs" id="genre-tabs">
+      <button class="filter-tab active" onclick="filterByGenre('Todos')">🎬 Todos</button>
+      <button class="filter-tab" onclick="filterByGenre('Acción')">💥 Acción</button>
+      <button class="filter-tab" onclick="filterByGenre('Comedia')">😂 Comedia</button>
+      <button class="filter-tab" onclick="filterByGenre('Drama')">🎭 Drama</button>
+      <button class="filter-tab" onclick="filterByGenre('Terror')">👻 Terror</button>
+      <button class="filter-tab" onclick="filterByGenre('Animación')">🎨 Animación</button>
+      <button class="filter-tab" onclick="filterByGenre('Ciencia Ficción')">🚀 Ciencia Ficción</button>
+      <button class="filter-tab" onclick="filterByGenre('Romance')">💖 Romance</button>
+      <button class="filter-tab" onclick="filterByGenre('Thriller')">🕵️ Thriller</button>
+      <button class="filter-tab" onclick="filterByGenre('Series')">📺 Series</button>
+    </div>
+  </div>
+
+  <!-- NO RESULTS -->
+  <div id="no-results">
+    <div class="icon">🔍</div>
+    <h3>Sin resultados</h3>
+    <p>No encontramos películas con ese criterio. Intenta con otro término.</p>
+  </div>
+
+  <!-- SECTION: Más vistos -->
+  <section id="section-trending" class="content-section">
+    <div class="section-header">
+      <h2 class="section-title"><span class="icon">🔥</span> Más Vistos Esta Semana <span class="section-line"></span></h2>
+      <a href="#" class="view-all">Ver todo →</a>
+    </div>
+    <div class="movies-grid" id="grid-trending"></div>
+  </section>
+
+  <!-- ADSTERRA SMARTLINK — MEDIO -->
+  <div class="adsterra-mid">
+    <div class="adsterra-mid-label">
+      <strong>📢 Publicidad</strong>
+      Zona Adsterra Smartlink — Pega aquí tu script
+      <!-- ZONA ADSTERRA SMARTLINK MEDIO -->
+    </div>
+  </div>
+
+  <!-- SECTION: Estrenos -->
+  <section id="section-new" class="content-section">
+    <div class="section-header">
+      <h2 class="section-title"><span class="icon">✨</span> Estrenos 2026 <span class="section-line"></span></h2>
+      <a href="#" class="view-all">Ver todo →</a>
+    </div>
+    <div class="movies-row" id="grid-new"></div>
+  </section>
+
+  <!-- SECTION: Series populares -->
+  <section id="section-series" class="content-section">
+    <div class="section-header">
+      <h2 class="section-title"><span class="icon">📺</span> Series Populares <span class="section-line"></span></h2>
+      <a href="#" class="view-all">Ver todo →</a>
+    </div>
+    <div class="featured-row" id="grid-series"></div>
+  </section>
+
+  <!-- AFFILIATE SECTION -->
+  <section id="affiliate-section">
+    <div class="affiliate-label">🛒 Ofertas para ti</div>
+    <h2 class="affiliate-title">Mejora tu experiencia de cine</h2>
+    <p class="affiliate-desc">
+      Disfruta películas con el mejor equipo. Aprovecha estas ofertas exclusivas seleccionadas para ti.
+    </p>
+    <div class="affiliate-links">
+      <!-- ZONA AFILIADOS: Reemplaza href="#" con tus links de afiliado reales -->
+      <a href="#" class="aff-btn aff-btn-1" onclick="showToast('Redirigiendo a oferta...'); return true;">
+        📺 Smart TV 4K — Ver oferta
+      </a>
+      <a href="#" class="aff-btn aff-btn-2" onclick="showToast('Redirigiendo a oferta...'); return true;">
+        🎧 Audífonos Bluetooth — Ver oferta
+      </a>
+      <a href="#" class="aff-btn aff-btn-3" onclick="showToast('Redirigiendo a oferta...'); return true;">
+        🚀 VPN Premium — Descuento
+      </a>
+    </div>
+    <!-- Puedes agregar más botones de afiliado aquí -->
+  </section>
+
+  <!-- SECTION: Acción y Aventura -->
+  <section id="section-action" class="content-section">
+    <div class="section-header">
+      <h2 class="section-title"><span class="icon">💥</span> Acción y Aventura <span class="section-line"></span></h2>
+      <a href="#" class="view-all">Ver todo →</a>
+    </div>
+    <div class="movies-grid" id="grid-action"></div>
+  </section>
+
+  <!-- ADSTERRA SMARTLINK — BOTTOM -->
+  <div class="adsterra-bottom">
+    <div class="adsterra-mid-label">
+      <strong>📢 Publicidad</strong>
+      Zona Adsterra Smartlink — Pega aquí tu script
+      <!-- ZONA ADSTERRA SMARTLINK BOTTOM -->
+    </div>
+  </div>
+
+  <!-- SECTION: Comedia y Familia -->
+  <section id="section-comedy" class="content-section">
+    <div class="section-header">
+      <h2 class="section-title"><span class="icon">😂</span> Comedia y Familia <span class="section-line"></span></h2>
+      <a href="#" class="view-all">Ver todo →</a>
+    </div>
+    <div class="movies-grid" id="grid-comedy"></div>
+  </section>
+
+</main>
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="logo">CINE<span>MAX</span></div>
+      <p>La mejor plataforma de streaming en México. Películas, series y más, completamente gratis. Disfruta el cine desde cualquier dispositivo.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Géneros</h4>
+      <ul>
+        <li><a href="#" onclick="filterByGenre('Acción'); return false;">Acción</a></li>
+        <li><a href="#" onclick="filterByGenre('Comedia'); return false;">Comedia</a></li>
+        <li><a href="#" onclick="filterByGenre('Drama'); return false;">Drama</a></li>
+        <li><a href="#" onclick="filterByGenre('Terror'); return false;">Terror</a></li>
+        <li><a href="#" onclick="filterByGenre('Animación'); return false;">Animación</a></li>
+        <li><a href="#" onclick="filterByGenre('Romance'); return false;">Romance</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Plataforma</h4>
+      <ul>
+        <li><a href="#">Inicio</a></li>
+        <li><a href="#">Estrenos</a></li>
+        <li><a href="#">Top 10</a></li>
+        <li><a href="#">Mi lista</a></li>
+        <li><a href="#">Historial</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="#">Aviso de privacidad</a></li>
+        <li><a href="#">Términos de uso</a></li>
+        <li><a href="#">DMCA</a></li>
+        <li><a href="#">Contacto</a></li>
+        <li><a href="#">Anúnciate</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 CineMax MX — Solo para entretenimiento. No almacenamos contenido. Los videos son propiedad de sus respectivos dueños.</p>
+    <div class="footer-langs">
+      <button>🇲🇽 ES-MX</button>
+      <button onclick="showToast('Idioma no disponible aún')">🇺🇸 EN</button>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     PLAYER MODAL
+============================================================ -->
+<div id="player-modal" role="dialog" aria-modal="true" aria-label="Reproductor de película">
+  <div id="player-modal-inner">
+    <button id="player-close" onclick="closePlayer()" aria-label="Cerrar">✕</button>
+
+    <div class="player-title-area">
+      <div class="player-badge" id="modal-badge">Película</div>
+      <h2 id="player-movie-title">Título de la película</h2>
+      <div class="player-meta-row" id="player-meta-row"></div>
+    </div>
+
+    <!-- VIDEO PLAYER -->
+    <div class="video-container">
+      <iframe id="yt-player"
+        src=""
+        title="Reproductor de video"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+        loading="lazy">
+      </iframe>
+    </div>
+
+    <!-- EPISODE LIST -->
+    <div id="episode-section" style="display:none">
+      <h3 class="episode-section-title">📋 Temporada 1 — Episodios</h3>
+      <div class="episodes-grid" id="episodes-grid"></div>
+    </div>
+
+    <!-- DESCRIPTION -->
+    <p id="player-desc"></p>
+
+    <!-- RECOMMENDED -->
+    <h3 class="modal-rec-title">🎬 También te puede gustar</h3>
+    <div class="movies-grid" id="modal-rec-grid" style="grid-template-columns: repeat(auto-fill, minmax(130px,1fr))"></div>
+  </div>
+</div>
+
+<!-- BACK TO TOP -->
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Volver arriba">↑</button>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<!-- ============================================================
+     JAVASCRIPT
+============================================================ -->
+<script>
+/* ============================================================
+   MOVIE / SERIES DATA
+   ▶ YouTube IDs: son trailers públicos reales
+   ▶ Reemplaza con los IDs de tus propios videos o trailers
+============================================================ */
+const MOVIES = [
+  // --- ACCIÓN ---
+  { id:0,  title:"El Último Imperio",         genre:"Acción",         year:2026, rating:8.7, duration:"2h 18min", type:"Película", yt:"dQw4w9WgXcQ", emoji:"🎬", desc:"En un México del futuro cercano, un joven hacker descubre que los cimientos del poder ocultan un secreto que podría cambiarlo todo. Una historia de traición, redención y revolución.", badge:"TENDENCIA", episodes:[] },
+  { id:1,  title:"Operación Sombra",          genre:"Acción",         year:2026, rating:8.2, duration:"1h 58min", type:"Película", yt:"dQw4w9WgXcQ", emoji:"🔫", desc:"Un ex agente de la DEA debe infiltrarse en un cartel para rescatar a su familia secuestrada.", badge:"NUEVO",     episodes:[] },
+  { id:2,  title:"Furia Azteca",              genre:"Acción",         year:2025, rating:7.9, duration:"1h 52min", type:"Película", yt:"dQw4w9WgXcQ", emoji:"⚔️", desc:"Cuando antiguos poderes despiertan en las montañas de Oaxaca, un guerrero moderno debe enfrentar su destino.", badge:"",          episodes:[] },
+  { id:3,  title:"Velocidad Extrema 9",       genre:"Acción",         year:2026, rating:7.5, duration:"2h 02min", type:"Película", yt:"dQw4w9WgXcQ", emoji:"🚗", desc:"El equipo de carreras más peligroso del mundo se enfrenta a su misión más imposible.", badge:"POPULAR",   episodes:[] },
+  { id:4,  title:"El Tigre de Guadalajara",   genre:"Acción",         year:2025, rating:8.0, duration:"1h 47min", type:"Película", yt:"dQw4w9WgXcQ", emoji:"🐯", desc:"Un justicievo enmascarado defiende las calles de Guadalajara contra el crimen organizado.", badge:"",          episodes:[] },
+
+  // --- COMEDIA ---
+  { id:5,  title:"Mi Familia Manda",          genre:"Comedia",        year:2026, rating:8.4, duration:"1h 45min", type:"Película", yt:"dQw4w9WgXcQ", emoji:"😂", desc:"Una familia disfuncional de cinco hermanos debe unirse para salvar el negocio familiar de tacos antes de la gran feria.", badge:"NUEVO",     episodes:[] },
+  { id:6,  title:"La Boda de mi Hermana",     genre:"Comedia",        year:2026, rating:7.8, duration:"1h 38min", type:"Película", yt:"dQw4w9WgXcQ", emoji:"💒", desc:"Cuando el ex novio de su hermana reaparece en la boda, todo se convierte en un caos divertido.", badge:"",          episodes:[] },
+  { id:7,  title:"Chilaquiles de Medianoche", genre:"Comedia",        year:2025, rating:7.6, duration:"1h 28min", type:"Película", yt:"dQw4w9WgXcQ", emoji:"🌮", desc:"Un chef novato descubre accidentalmente el secreto culinario más buscado de Ciudad de México.", badge:"",          episodes:[] },
+
+  // --- DRAMA ---
+  { id:8,  title:"Las Alas del Tiempo",       genre:"Drama",          year:2026, rating:9.0, duration:"2h 22min", type:"Película", yt:"dQw4w9WgXcQ", emoji:"🌅", desc:"Una madre migrante cruza tres países para reunirse con sus hijos. Historia basada en hechos reales.", badge:"PREMIADO",  episodes:[] },
+  { id:9,  title:"El Corazón de Tenochtitlan",genre:"Drama",          year:2025, rating:8.6, duration:"2h 05min", type:"Película", yt:"dQw4w9WgXcQ", emoji:"❤️", desc:"La historia de amor imposible entre una historiadora y un hombre que despierta de un sueño de siglos.", badge:"",          episodes:[] },
+  { id:10, title:"Cartas al Mar",             genre:"Drama",          year:2026, rating:8.1, duration:"1h 55min", type:"Película", yt:"dQw4w9WgXcQ", emoji:"✉️", desc:"Un escritor en crisis descubre las cartas de amor de su abuelo y emprende un viaje para encontrar su historia.", badge:"",          episodes:[] },
+
+  // --- TERROR ---
+  { id:11, title:"La Casa del Cerro Negro",   genre:"Terror",         year:2026, rating:8.3, duration:"1h 44min", type:"Película", yt:"dQw4w9WgXcQ", emoji:"👻", desc:"Un grupo de amigos llega a una mansión abandonada en las montañas de Puebla. No todos regresarán.", badge:"NUEVO",     episodes:[] },
+  { id:12, title:"El Muerto de la Colonia",   genre:"Terror",         year:2025, rating:7.7, duration:"1h 38min", type:"Película", yt:"dQw4w9WgXcQ", emoji:"💀", desc:"Una familia se muda a una casa con historia sangrienta. Las señales comienzan desde la primera noche.", badge:"",          episodes:[] },
+  { id:13, title:"Xólotl: El Perro del Inframundo", genre:"Terror",   year:2026, rating:8.5, duration:"1h 52min", type:"Película", yt:"dQw4w9WgXcQ", emoji:"🐕", desc:"La antigua deidad azteca despierta en el metro de Ciudad de México. El inframundo reclama su tributo.", badge:"TENDENCIA", episodes:[] },
+
+  // --- ANIMACIÓN ---
+  { id:14, title:"Dulce Aventura",            genre:"Animación",      year:2026, rating:8.9, duration:"1h 32min", type:"Película", yt:"dQw4w9WgXcQ", emoji:"🍭", desc:"Una pequeña bruja viaja por mundos de azúcar para encontrar el ingrediente más especial: el amor de su abuela.", badge:"FAMILIA",   episodes:[] },
+  { id:15, title:"Los Guardianes del Volcán", genre:"Animación",      year:2025, rating:8.7, duration:"1h 28min", type:"Película", yt:"dQw4w9WgXcQ", emoji:"🌋", desc:"Tres amigos con poderes elementales protegen México de criaturas que emergen de los volcanes dormidos.", badge:"POPULAR",   episodes:[] },
+
+  // --- CIENCIA FICCIÓN ---
+  { id:16, title:"Nexo 2077",                 genre:"Ciencia Ficción",year:2026, rating:9.1, duration:"2h 30min", type:"Película", yt:"dQw4w9WgXcQ", emoji:"🤖", desc:"En una megalópolis ciberpunk, una detective IA investiga su propio origen y descubre la verdad sobre la humanidad.", badge:"PREMIER",   episodes:[] },
+  { id:17, title:"Más Allá del Sol",          genre:"Ciencia Ficción",year:2026, rating:8.4, duration:"2h 08min", type:"Película", yt:"dQw4w9WgXcQ", emoji:"🚀", desc:"La primera tripulación latinoamericana en alcanzar Marte descubre que no son los primeros en llegar.", badge:"",          episodes:[] },
+
+  // --- ROMANCE ---
+  { id:18, title:"Amor en Guadalajara",       genre:"Romance",        year:2026, rating:7.9, duration:"1h 50min", type:"Película", yt:"dQw4w9WgXcQ", emoji:"💕", desc:"Dos extraños se conocen en un vuelo cancelado y tienen 24 horas para descubrir si el amor a primera vista existe.", badge:"NUEVO",     episodes:[] },
+  { id:19, title:"Tequila y Rosas",           genre:"Romance",        year:2025, rating:7.5, duration:"1h 42min", type:"Película", yt:"dQw4w9WgXcQ", emoji:"🌹", desc:"Un productor musical y una cantante ranchera descubren que sus ritmos opuestos crean la canción perfecta.", badge:"",          episodes:[] },
+
+  // --- THRILLER ---
+  { id:20, title:"Sin Rastro",                genre:"Thriller",       year:2026, rating:8.8, duration:"2h 14min", type:"Película", yt:"dQw4w9WgXcQ", emoji:"🔍", desc:"Una investigadora privada acepta un caso simple y se encuentra atrapada en una red de corrupción al más alto nivel.", badge:"PREMIADO",  episodes:[] },
+  { id:21, title:"El Informante",             genre:"Thriller",       year:2026, rating:8.3, duration:"1h 58min", type:"Película", yt:"dQw4w9WgXcQ", emoji:"🕵️", desc:"Un periodista recibe una memoria USB que podría derribar al gobierno. Ahora alguien lo quiere muerto.", badge:"NUEVO",     episodes:[] },
+
+  // --- SERIES ---
+  { id:22, title:"Cartel: La Serie",          genre:"Series",         year:2026, rating:9.2, duration:"45min/ep", type:"Serie",    yt:"dQw4w9WgXcQ", emoji:"🌵", desc:"El ascenso y caída de una familia que controlaba el comercio más oscuro de México. 8 episodios por temporada.", badge:"T2 NUEVA",  episodes:["Ep 1","Ep 2","Ep 3","Ep 4","Ep 5","Ep 6","Ep 7","Ep 8"] },
+  { id:23, title:"La Fiscalía",               genre:"Series",         year:2026, rating:8.9, duration:"52min/ep", type:"Serie",    yt:"dQw4w9WgXcQ", emoji:"⚖️", desc:"Una fiscal incorruptible enfrenta a los poderes fácticos de la Ciudad de México en su búsqueda por justicia.", badge:"NUEVO",     episodes:["Ep 1","Ep 2","Ep 3","Ep 4","Ep 5","Ep 6","Ep 7","Ep 8","Ep 9","Ep 10"] },
+  { id:24, title:"Neon Barrio",               genre:"Series",         year:2025, rating:8.5, duration:"38min/ep", type:"Serie",    yt:"dQw4w9WgXcQ", emoji:"🌆", desc:"Jóvenes artistas en el México cyberpunk de 2060 luchan por sobrevivir y crear arte en un mundo corporativo.", badge:"",          episodes:["Ep 1","Ep 2","Ep 3","Ep 4","Ep 5","Ep 6"] },
+  { id:25, title:"Chefs de Guerra",           genre:"Series",         year:2026, rating:8.0, duration:"42min/ep", type:"Serie",    yt:"dQw4w9WgXcQ", emoji:"👨‍🍳", desc:"Diez chefs mexicanos compiten por el título del mejor restaurante del país. Cada plato cuenta una historia.", badge:"POPULAR",   episodes:["Ep 1","Ep 2","Ep 3","Ep 4","Ep 5","Ep 6","Ep 7","Ep 8","Ep 9","Ep 10","Ep 11","Ep 12"] },
+];
+
+/* ============================================================
+   STATE
+============================================================ */
+let currentGenre = 'Todos';
+let currentSearch = '';
+let activeMovieId = null;
+
+/* ============================================================
+   RENDER ENGINE
+============================================================ */
+function createCard(m) {
+  return `
+    <div class="card" onclick="openPlayer(${m.id})">
+      <div class="card-thumb">
+        <div class="card-thumb-placeholder" style="background:linear-gradient(135deg,${hashColor(m.id)})">${m.emoji}</div>
+        ${m.badge ? `<div class="card-badge">${m.badge}</div>` : ''}
+        <div class="card-rating">⭐ ${m.rating}</div>
+        <div class="card-overlay">
+          <div class="card-play-btn">▶</div>
+        </div>
+      </div>
+      <div class="card-info">
+        <div class="card-title">${m.title}</div>
+        <div class="card-meta">
+          <span>${m.year}</span>
+          <span class="card-genre-pill">${m.genre}</span>
+        </div>
+      </div>
+    </div>`;
+}
+
+function createFeatCard(m) {
+  return `
+    <div class="feat-card" onclick="openPlayer(${m.id})">
+      <div class="feat-thumb">
+        <div class="feat-thumb-gradient" style="background:linear-gradient(135deg,${hashColor(m.id)})">${m.emoji}</div>
+        <div class="feat-play"><div class="feat-play-btn">▶</div></div>
+        ${m.badge ? `<div class="card-badge">${m.badge}</div>` : ''}
+        <div class="card-rating">⭐ ${m.rating}</div>
+      </div>
+      <div class="feat-info">
+        <div class="feat-title">${m.title}</div>
+        <div class="feat-desc">${m.desc}</div>
+        <div class="feat-footer">
+          <div class="feat-tags">
+            <span class="feat-tag">${m.type}</span>
+            <span class="feat-tag">${m.year}</span>
+            <span class="feat-tag">${m.duration}</span>
+          </div>
+          <div class="feat-rating">⭐ ${m.rating}</div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function hashColor(id) {
+  const colors = [
+    '#1a0a2e,#16213e','#0d1a0d,#1a3a1a','#1a0a0a,#3a1a0a',
+    '#0a0a1a,#1a0a3a','#1a1a0a,#3a2a0a','#0a1a1a,#0a2a2a',
+    '#1a0a1a,#2a0a2a','#0d0d0d,#2a1a0a','#0a1a0a,#1a3a2a',
+  ];
+  return colors[id % colors.length];
+}
+
+function renderGrid(gridId, movies, cardType='card') {
+  const el = document.getElementById(gridId);
+  if (!el) return;
+  if (!movies.length) { el.innerHTML = ''; return; }
+  el.innerHTML = movies.map(m => cardType === 'feat' ? createFeatCard(m) : createCard(m)).join('');
+}
+
+function filterMovies(genre, search) {
+  return MOVIES.filter(m => {
+    const matchG = genre === 'Todos' || m.genre === genre;
+    const matchS = !search || m.title.toLowerCase().includes(search.toLowerCase()) ||
+                   m.genre.toLowerCase().includes(search.toLowerCase());
+    return matchG && matchS;
+  });
+}
+
+function renderAll() {
+  const filtered = filterMovies(currentGenre, currentSearch);
+  const noRes = document.getElementById('no-results');
+
+  if (!filtered.length) {
+    noRes.style.display = 'block';
+    document.querySelectorAll('.content-section').forEach(s => s.style.display = 'none');
+    return;
+  }
+  noRes.style.display = 'none';
+  document.querySelectorAll('.content-section').forEach(s => s.style.display = 'block');
+
+  if (currentGenre === 'Todos' && !currentSearch) {
+    // Home layout
+    const trending  = MOVIES.filter(m => m.badge && m.type === 'Película').slice(0,8);
+    const newMovies = MOVIES.filter(m => m.year === 2026 && m.type === 'Película').slice(0,8);
+    const series    = MOVIES.filter(m => m.type === 'Serie').slice(0,4);
+    const action    = MOVIES.filter(m => m.genre === 'Acción').slice(0,8);
+    const comedy    = MOVIES.filter(m => m.genre === 'Comedia').slice(0,8);
+    renderGrid('grid-trending', trending);
+    renderGrid('grid-new', newMovies);
+    renderGrid('grid-series', series, 'feat');
+    renderGrid('grid-action', action);
+    renderGrid('grid-comedy', comedy);
+    document.getElementById('section-series').style.display = 'block';
+    document.getElementById('section-comedy').style.display = 'block';
+  } else {
+    // Filtered view: show all in trending grid
+    renderGrid('grid-trending', filtered);
+    renderGrid('grid-new', []);
+    renderGrid('grid-series', []);
+    renderGrid('grid-action', []);
+    renderGrid('grid-comedy', []);
+    document.getElementById('section-series').style.display = 'none';
+    document.getElementById('section-comedy').style.display = 'none';
+    // Update section title
+    const titleEl = document.querySelector('#section-trending .section-title');
+    if (currentSearch) {
+      titleEl.innerHTML = `<span class="icon">🔍</span> Resultados para "${currentSearch}" <span class="section-line"></span>`;
+    } else {
+      titleEl.innerHTML = `<span class="icon">🎬</span> ${currentGenre} <span class="section-line"></span>`;
+    }
+  }
+}
+
+/* ============================================================
+   GENRE FILTER
+============================================================ */
+function filterByGenre(genre) {
+  currentGenre = genre;
+  currentSearch = '';
+  document.getElementById('search-input').value = '';
+  document.getElementById('mobile-search').value = '';
+
+  // Reset section title for home
+  const titleEl = document.querySelector('#section-trending .section-title');
+  titleEl.innerHTML = `<span class="icon">🔥</span> Más Vistos Esta Semana <span class="section-line"></span>`;
+
+  document.querySelectorAll('.filter-tab').forEach(t => {
+    t.classList.toggle('active', t.textContent.trim().includes(genre) || (genre==='Todos' && t.textContent.includes('Todos')));
+  });
+  renderAll();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ============================================================
+   SEARCH
+============================================================ */
+function handleSearch(val) {
+  currentSearch = val.trim();
+  currentGenre  = 'Todos';
+  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  document.querySelector('.filter-tab').classList.add('active');
+  renderAll();
+}
+
+function toggleSearch() {
+  const box = document.getElementById('search-box');
+  box.classList.toggle('open');
+  if (box.classList.contains('open')) {
+    setTimeout(() => document.getElementById('search-input').focus(), 320);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('search-input').addEventListener('input', e => handleSearch(e.target.value));
+});
+
+/* ============================================================
+   MOBILE MENU
+============================================================ */
+function toggleMenu() {
+  const menu = document.getElementById('mobile-menu');
+  const btn  = document.getElementById('hamburger');
+  menu.classList.toggle('open');
+  btn.classList.toggle('open');
+}
+function closeMobileMenu() {
+  document.getElementById('mobile-menu').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('open');
+}
+
+/* ============================================================
+   PLAYER MODAL
+============================================================ */
+function openPlayer(id) {
+  const m = MOVIES[id];
+  if (!m) return;
+  activeMovieId = id;
+
+  document.getElementById('player-movie-title').textContent = m.title;
+  document.getElementById('modal-badge').textContent = m.type;
+  document.getElementById('player-desc').textContent = m.desc;
+
+  // Meta row
+  const metaRow = document.getElementById('player-meta-row');
+  metaRow.innerHTML = `
+    <span class="player-meta-tag">${m.year}</span>
+    <span class="player-meta-tag">${m.duration}</span>
+    <span class="player-meta-tag">${m.genre}</span>
+    <span class="player-rating">⭐ ${m.rating}</span>
+    ${m.badge ? `<span class="player-meta-tag" style="background:var(--red);color:#fff">${m.badge}</span>` : ''}
+  `;
+
+  // YouTube embed
+  loadEpisode(m.yt, 0, id);
+
+  // Episode list
+  const epSection = document.getElementById('episode-section');
+  const epGrid    = document.getElementById('episodes-grid');
+  if (m.episodes && m.episodes.length > 0) {
+    epSection.style.display = 'block';
+    epGrid.innerHTML = m.episodes.map((ep, i) =>
+      `<button class="ep-btn ${i===0?'active':''}" onclick="loadEpisode('${m.yt}',${i},${id})">${ep}</button>`
+    ).join('');
+  } else {
+    epSection.style.display = 'none';
+    epGrid.innerHTML = '';
+  }
+
+  // Recommended
+  const rec = MOVIES.filter(x => x.id !== id && (x.genre === m.genre)).slice(0,6);
+  renderGrid('modal-rec-grid', rec);
+
+  // Open modal
+  document.getElementById('player-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  // GA event
+  if (typeof gtag !== 'undefined') {
+    gtag('event', 'play_movie', { event_category: 'engagement', event_label: m.title });
+  }
+}
+
+function loadEpisode(ytId, epIndex, movieId) {
+  // Update active episode button
+  document.querySelectorAll('.ep-btn').forEach((b, i) => b.classList.toggle('active', i === epIndex));
+
+  // Embed YouTube
+  // NOTE: Replace 'dQw4w9WgXcQ' in MOVIES array with real YouTube video IDs
+  const iframe = document.getElementById('yt-player');
+  iframe.src = `https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0&modestbranding=1&color=red`;
+}
+
+function closePlayer() {
+  document.getElementById('player-modal').classList.remove('open');
+  document.body.style.overflow = '';
+  // Stop video
+  const iframe = document.getElementById('yt-player');
+  iframe.src = '';
+}
+
+// Close modal on background click
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('player-modal').addEventListener('click', e => {
+    if (e.target === document.getElementById('player-modal')) closePlayer();
+  });
+});
+
+// Close on Escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && document.getElementById('player-modal').classList.contains('open')) closePlayer();
+});
+
+/* ============================================================
+   BACK TO TOP + SCROLL EVENTS
+============================================================ */
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('back-top');
+  btn.classList.toggle('show', window.scrollY > 400);
+});
+
+/* ============================================================
+   TOAST
+============================================================ */
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+/* ============================================================
+   INIT
+============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+  renderAll();
+});
+</script>
+
+</body>
+</html>
